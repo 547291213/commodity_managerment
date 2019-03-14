@@ -1,0 +1,11 @@
+## user - table
+create table user
+(
+	id int auto_increment,
+	user_name TEXT null,
+	password TEXT null,
+	permissions int default 0 null,
+	constraint user_pk
+		primary key (id)
+);
+
