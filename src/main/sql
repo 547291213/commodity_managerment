@@ -1,11 +1,45 @@
-## user - table
+## table -- user
+## permissions 0 普通用户，1 管理员 ，2超级管理员
 create table user
 (
-	id int auto_increment,
-	user_name TEXT null,
+	userId int auto_increment,
+	userName TEXT null,
 	password TEXT null,
+	nickName TEXT null,
 	permissions int default 0 null,
 	constraint user_pk
-		primary key (id)
+		primary key (userId)
 );
+
+
+## table -- goods
+create table goods
+(
+	goodsId int auto_increment,
+	goodsName TEXT not null,
+	goodsCount int not null,
+	goodsCategory int not null,
+	goodsImg TEXT null,
+	goodsDescribe TEXT null,
+	lastModifyUser TEXT not null,
+	lastModifyTime TEXT not null,
+	constraint goods_pk
+		primary key (goodsId)
+);
+
+
+## table -- message
+create table message
+(
+	msgId int auto_increment,
+	goodsId int not null,
+	user_name TEXT not null,
+	msgTitle TEXT not null,
+	msgContent TEXT not null,
+	msgTime TEXT not null,
+	constraint message_pk
+		primary key (msgId)
+);
+
+
 

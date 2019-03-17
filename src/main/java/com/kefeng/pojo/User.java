@@ -9,17 +9,18 @@ package com.kefeng.pojo;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    int id ;
-    String user_name ;
+    int userId ;
+    String userName ;
     String password ;
     int permissions  ; //0 默认权限 1 管理员权限
+    String nickName;
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public void setPassword(String password) {
@@ -30,12 +31,16 @@ public class User implements Serializable {
         this.permissions = permissions;
     }
 
-    public int getId() {
-        return id;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {
@@ -44,5 +49,9 @@ public class User implements Serializable {
 
     public int getPermissions() {
         return permissions;
+    }
+
+    public String getNickName() {
+        return nickName;
     }
 }

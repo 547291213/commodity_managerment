@@ -5,16 +5,48 @@
 <mapper namespace="com.kefeng.dao.UserMapper">
 
     <resultMap id="userMap" type="com.kefeng.pojo.User">
-        <id property="id" column="id"/>
-        <result property="user_name" column="user_name"/>
+        <id property="userId" column="userId"/>
+        <result property="userName" column="userName"/>
         <result property="password" column="password"/>
     </resultMap>
     <insert id="addUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.kefeng.pojo.User">
-        INSERT  INTO USER (user_name,password) VALUES (#{user_name},#{password})
+        INSERT INTO USER (userName, password , permissions , nickName)
+        VALUES (#{userName}, #{password} , #{permissions} , #{nickName})
     </insert>
+
     <select id="getUserByUserName" resultType="com.kefeng.pojo.User" parameterType="string">
       <![CDATA[
-        SELECT * FROM USER WHERE user_name=#{user_name}
-      ]]>
+        SELECT *
+        FROM USER
+        WHERE userName = #{userName}
+        ]]>
+    </select>
+
+    <delete id="delUser" parameterType="int">
+        delete
+        from user
+        where userId = #{userId}
+    </delete>
+
+    <update id="updateUser" parameterType="com.kefeng.pojo.User">
+        update user
+        set userName   = #{userName},
+            password    = #{password},
+            permissions = #{permissions},
+            nickName   = #{nickName}
+        where userId = #{userId}
+    </update>
+
+    <select id="getUserList" resultType="com.kefeng.pojo.User">
+        select *
+        from user
+    </select>
+
+    <select id="getUserById" resultType="com.kefeng.pojo.User" parameterType="int">
+      <![CDATA[
+        SELECT *
+        FROM user
+        WHERE userId = #{userId}
+        ]]>
     </select>
 </mapper>
