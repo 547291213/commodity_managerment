@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kefeng.dao.GoodsMapper">
+
+    <select id="queryByCategory" parameterType="int" resultType="com.kefeng.pojo.Goods">
+        select *
+        from goods
+        where goodsCategory = #{goodsCategory}
+    </select>
+
+    <select id="getGoodsById" parameterType="int" resultType="com.kefeng.pojo.Goods">
+        select *
+        from goods
+        where goodsId = #{goodsId}
+    </select>
+
+    <insert id="addGoods" parameterType="com.kefeng.pojo.Goods">
+        insert into goods (goodsName, goodsCount, goodsCategory, goodsImg, goodsDescribe, lastModifyUser,
+                           lastModifyTime, originalPrice, presentPrice)
+        values (#{goodsName}, #{goodsCount}, #{goodsCategory},
+                #{goodsImg}, #{goodsDescribe}, #{lastModifyUser},
+                #{lastModifyTime}, #{originalPrice}, #{presentPrice})
+    </insert>
+
+
+    <delete id="delGoods" parameterType="int">
+        delete
+        from goods
+        where goodsId = #{goodsId}
+    </delete>
+
+
+    <update id="updateGoods" parameterType="com.kefeng.pojo.Goods">
+        update goods
+        set goodsName = #{goodsName} ,
+            goodsCount = #{goodsCount} ,
+            goodsCategory = #{goodsCategory} ,
+            goodsImg = #{goodsImg} ,
+            goodsDescribe = #{goodsDescribe} ,
+            lastModifyUser = #{lastModifyUser} ,
+            lastModifyTime = #{lastModifyTime} ,
+            originalPrice = #{originalPrice} ,
+            presentPrice = #{originalPrice}
+
+        where goodsId = #{goodsId}
+    </update>
+
+</mapper>

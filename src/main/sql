@@ -23,6 +23,8 @@ create table goods
 	goodsDescribe TEXT null,
 	lastModifyUser TEXT not null,
 	lastModifyTime TEXT not null,
+	originalPrice int null ,
+	presentPrice int null ,
 	constraint goods_pk
 		primary key (goodsId)
 );

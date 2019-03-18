@@ -13,6 +13,7 @@ import com.kefeng.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+@SuppressWarnings("ALL")
 @Controller
 @RequestMapping(value = "/android")
 
@@ -34,6 +36,7 @@ public class AppUserController {
 
     /**
      * android端用户登陆
+     *
      * @param userName
      * @param password
      * @param httpSession
@@ -74,6 +77,7 @@ public class AppUserController {
 
     /**
      * app端注册用户
+     *
      * @param userName
      * @param password
      * @return 1 用户已经存在  0成功  2未知错误
@@ -81,30 +85,78 @@ public class AppUserController {
     @RequestMapping(value = "/register", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Code Register(@RequestParam("userName") String userName,
-                      @RequestParam("password") String password) {
+                         @RequestParam("password") String password) {
 
-        Code code = new Code() ;
+        Code code = new Code();
         /**
          * 用户已经存在
          */
-        if (userService.getUserByUserName(userName) != null){
+        if (userService.getUserByUserName(userName) != null) {
             code.setCode("1");
-            return code ;
+            return code;
         }
         try {
-            User user = new User() ;
+            User user = new User();
             user.setUserName(userName);
             user.setPassword(password);
             userService.addUser(user);
             code.setCode("0");
-            return code ;
-        }catch (Exception e){
+            return code;
+        } catch (Exception e) {
 
             code.setCode("2");
-            return code ;
+            return code;
+        }
+    }
+
+    /**
+     * 根据用户名获取用户信息
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value = "/getUserInfo", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public User getUserInfo(@RequestParam("userName") String userName) {
+
+        return userService.getUserByUserName(userName);
+    }
+
+
+    /**
+     * 更新用户信息
+     *
+     * @param userId
+     * @param userName
+     * @param permissions
+     * @param password
+     * @param nickName
+     * @return 用户列表的jsp
+     */
+    //测试地址http://localhost:8083/android/updateUser?userId=2&userName=123123&permissions=1&password=password&nickName=initializing
+    @RequestMapping(value = "/updateUser")
+    @ResponseBody
+    public Code update(@RequestParam("userId") int userId, @RequestParam("userName") String userName,
+                       @RequestParam("permissions") int permissions,
+                       @RequestParam("password") String password,
+                       @RequestParam("nickName") String nickName) {
+
+        Code code = new Code();
+        User user = new User();
+        user.setUserId(userId);
+        user.setPassword(password);
+        user.setPermissions(permissions);
+        user.setUserName(userName);
+        user.setNickName(nickName);
+        try {
+            userService.updateUser(user);
+            code.setCode("0");
+            return code;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-
-
+        code.setCode("1");
+        return code;
     }
+
 }

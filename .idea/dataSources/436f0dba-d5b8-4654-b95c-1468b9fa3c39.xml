@@ -1157,82 +1157,92 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="289" parent="278" name="PRIMARY">
+    <column id="289" parent="278" name="originalPrice">
+      <Position>9</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="290" parent="278" name="presentPrice">
+      <Position>10</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="291" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>goodsId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="290" parent="279" name="msgId">
+    <column id="292" parent="279" name="msgId">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="279" name="goodsId">
+    <column id="293" parent="279" name="goodsId">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="279" name="user_name">
+    <column id="294" parent="279" name="user_name">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="279" name="msgTitle">
+    <column id="295" parent="279" name="msgTitle">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="279" name="msgContent">
+    <column id="296" parent="279" name="msgContent">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="279" name="msgTime">
+    <column id="297" parent="279" name="msgTime">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="296" parent="279" name="PRIMARY">
+    <key id="298" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>msgId</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="297" parent="280" name="userId">
+    <column id="299" parent="280" name="userId">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="280" name="userName">
+    <column id="300" parent="280" name="userName">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="280" name="password">
+    <column id="301" parent="280" name="password">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="280" name="permissions">
+    <column id="302" parent="280" name="permissions">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="280" name="nickName">
+    <column id="303" parent="280" name="nickName">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="302" parent="280" name="PRIMARY">
+    <key id="304" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>userId</ColNames>
       <Primary>1</Primary>
