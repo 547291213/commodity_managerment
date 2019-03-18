@@ -28,18 +28,36 @@ public class UserLoginedController {
     @Autowired
     UserService userService;
 
+    /**
+     * 登陆后默认跳转的界面
+     * @return 返回用户列表的jsp
+     */
     @RequestMapping(value = "/userList1", method = RequestMethod.GET)
     public String stuList() {
         return "user/userList";
     }
 
 
+    /**
+     * 把用户列表按json格式传出，使用pagehelper实现分页
+     * @param current  当前页面
+     * @param rowCount 行数
+     * @return 用户列表
+     */
     @RequestMapping(value = "/userList", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public UserGrid userList(@RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
         return getUserGrid(current, rowCount);
     }
 
+    /**
+     * 添加新的用户
+     * @param userName
+     * @param permissions
+     * @param password
+     * @param nickName
+     * @return 用户列表界面的jsp
+     */
     @RequestMapping(value = "/addUser", method = RequestMethod.POST)
     public String add(@RequestParam("userName") String userName,
                       @RequestParam("permissions") int permissions,
@@ -60,6 +78,11 @@ public class UserLoginedController {
     }
 
 
+    /**
+     * 更具userId删除用户
+     * @param userId
+     * @return 用户列表界面的jsp
+     */
     @RequestMapping(value = "/delUser", method = RequestMethod.POST)
     public String delete(@RequestParam("userId") int userId) {
         try {
@@ -71,6 +94,12 @@ public class UserLoginedController {
     }
 
 
+    /**
+     * 获取用户列表界面
+     * @param current
+     * @param rowCount
+     * @return 用户列表
+     */
     private UserGrid getUserGrid(@RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
         int total = userService.getUserNum();
         System.out.println("user number is " + total);
@@ -83,6 +112,11 @@ public class UserLoginedController {
         return userGrid;
     }
 
+    /**
+     * 根据用户id获取用户信息，返回json数据
+     * @param userId
+     * @return 用户信息
+     */
     @RequestMapping(value = "/getUserInfo", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public User getStuById(@RequestParam("userId") int userId) {
@@ -91,6 +125,15 @@ public class UserLoginedController {
         return user;
     }
 
+    /**
+     * 更新用户信息
+     * @param userId
+     * @param userName
+     * @param permissions
+     * @param password
+     * @param nickName
+     * @return 用户列表的jsp
+     */
     @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
     public String update(@RequestParam("userId") int userId, @RequestParam("userName") String userName,
                          @RequestParam("permissions") int permissions,
@@ -106,6 +149,12 @@ public class UserLoginedController {
         return "redirect:userList1";
     }
 
+    /**
+     * 将用户列表导出为excel文件
+     * 目前有bug，错误未知
+     * @param response
+     * @throws Exception
+     */
     @RequestMapping("/exportUser")
     public void export(HttpServletResponse response) throws Exception {
         InputStream is = userService.getInputStream();
@@ -114,6 +163,7 @@ public class UserLoginedController {
             System.out.println("导出excel出错。输入流为空");
             return;
         }
+
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("contentDisposition", "attachment;filename=AllUsers.xls");
         ServletOutputStream output = response.getOutputStream();
