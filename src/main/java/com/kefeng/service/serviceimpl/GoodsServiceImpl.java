@@ -7,6 +7,7 @@
 package com.kefeng.service.serviceimpl;
 
 
+import com.github.pagehelper.PageHelper;
 import com.kefeng.dao.GoodsMapper;
 import com.kefeng.pojo.Goods;
 import com.kefeng.service.GoodsService;
@@ -23,11 +24,11 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
-    GoodsMapper goodsMapper ;
+    GoodsMapper goodsMapper;
 
     @Override
-    public List<Goods> queryByCategory(int goodsCategory)  {
-        return goodsMapper.queryByCategory(goodsCategory) ;
+    public List<Goods> queryByCategory(int goodsCategory) {
+        return goodsMapper.queryByCategory(goodsCategory);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void delGoods(int goodsId) throws Exception{
+    public void delGoods(int goodsId) throws Exception {
 
         goodsMapper.delGoods(goodsId);
     }
@@ -53,5 +54,16 @@ public class GoodsServiceImpl implements GoodsService {
         goodsMapper.updateGoods(goods);
     }
 
+    @Override
+    public List<Goods> getPageGoods(int goodsCategory, int pageNum, int pageSize) {
 
+        PageHelper.startPage(pageNum, pageSize);//分页核心代码
+        return goodsMapper.queryByCategory(goodsCategory);
+
+    }
+
+    @Override
+    public int getGoodsNum(int goodsCategory) {
+        return goodsMapper.queryByCategory(goodsCategory).size()  ;
+    }
 }

@@ -38,4 +38,5 @@ public interface GoodsMapper {
      */
     void updateGoods(Goods goods) ;
 
+
 }

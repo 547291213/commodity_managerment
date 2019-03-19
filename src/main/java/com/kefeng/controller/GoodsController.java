@@ -8,6 +8,7 @@ package com.kefeng.controller;
 
 import com.kefeng.pojo.Code;
 import com.kefeng.pojo.Goods;
+import com.kefeng.pojo.GoodsGrid;
 import com.kefeng.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,20 @@ public class GoodsController {
         }
 
         return null;
+    }
+
+    //测试网址：http://localhost:8083/goods/page/getGoodsById?goodsCategory=2&current=1&rowCount=10
+    @RequestMapping(value = "/page/getGoodsById", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private GoodsGrid getStuGrid(@RequestParam("goodsCategory") int goodsCategory, @RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
+        int total = goodsService.getGoodsNum(goodsCategory);
+        List<Goods> list = goodsService.getPageGoods(goodsCategory,current, rowCount);
+        GoodsGrid goodsGrid = new GoodsGrid();
+        goodsGrid.setCurrent(current);
+        goodsGrid.setRowCount(rowCount);
+        goodsGrid.setRows(list);
+        goodsGrid.setTotal(total);
+        return goodsGrid;
     }
 
     @RequestMapping(value = "/getGoodsById", produces = {"application/json;charset=UTF-8"})
