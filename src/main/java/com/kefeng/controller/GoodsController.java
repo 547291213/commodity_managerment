@@ -10,13 +10,28 @@ import com.kefeng.pojo.Code;
 import com.kefeng.pojo.Goods;
 import com.kefeng.pojo.GoodsGrid;
 import com.kefeng.service.GoodsService;
+import com.kefeng.util.ImageUtil;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("ALL")
 @Controller
@@ -45,7 +60,7 @@ public class GoodsController {
     @ResponseBody
     private GoodsGrid getStuGrid(@RequestParam("goodsCategory") int goodsCategory, @RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
         int total = goodsService.getGoodsNum(goodsCategory);
-        List<Goods> list = goodsService.getPageGoods(goodsCategory,current, rowCount);
+        List<Goods> list = goodsService.getPageGoods(goodsCategory, current, rowCount);
         GoodsGrid goodsGrid = new GoodsGrid();
         goodsGrid.setCurrent(current);
         goodsGrid.setRowCount(rowCount);
@@ -80,41 +95,76 @@ public class GoodsController {
      * @param presentPrice
      * @return 0表示成功 1表示失败
      */
-    //测试网址http://localhost:8083/goods/addGoods?&goodsName=%E7%BA%AF%E7%89%9B%E5%A5%B6&goodsCount=24&goodsDescribe=%E4%BC%8A%E5%88%A9%E7%BA%AF%E7%89%9B%E5%A5%B6&goodsCategory=0&goodsImg=heheda&lastModifyTime=2019-03-18%2020:26&lastModifyUser=kefeng&originalPrice=68&presentPrice=60
-    @RequestMapping(value = "/addGoods", produces = {"application/json;charset=UTF-8"})
+    //测试网址http://localhost:8083/goods/addGoodsData?&goodsName=%E7%BA%AF%E7%89%9B%E5%A5%B6&goodsCount=24&goodsDescribe=%E4%BC%8A%E5%88%A9%E7%BA%AF%E7%89%9B%E5%A5%B6&goodsCategory=0&goodsImg=heheda&lastModifyTime=2019-03-18%2020:26&lastModifyUser=kefeng&originalPrice=68&presentPrice=60
+    @RequestMapping(value = "/goodsDataAdd", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Code addGoods(@RequestParam("goodsName") String goodsName,
                          @RequestParam("goodsCount") int goodsCount,
                          @RequestParam("goodsDescribe") String goodsDescribe,
                          @RequestParam("goodsCategory") int goodsCategory,
-                         @RequestParam("goodsImg") String goodsImg,
+                         @RequestParam("goodsImg") Object goodsImg,
                          @RequestParam("lastModifyTime") String lastModifyTime,
                          @RequestParam("lastModifyUser") String lastModifyUser,
                          @RequestParam("originalPrice") int originalPrice,
-                         @RequestParam("presentPrice") int presentPrice) {
+                         @RequestParam("presentPrice") int presentPrice,
+                         HttpServletRequest request,
+                         HttpSession session,
+                         HttpServletResponse response
+    ) {
 
-        Goods goods = new Goods();
-        goods.setGoodsName(goodsName);
-        goods.setGoodsCount(goodsCount);
-        goods.setGoodsDescribe(goodsDescribe);
-        goods.setGoodsCategory(goodsCategory);
-        goods.setGoodsImg(goodsImg);
-        goods.setLastModifyTime(lastModifyTime);
-        goods.setLastModifyUser(lastModifyUser);
-        goods.setOriginalPrice(originalPrice);
-        goods.setPresentPrice(presentPrice);
-
+        String path = "E:\\IDEA_workspace\\commodity_managerment\\src\\main\\webapp\\upload\\";
         Code code = new Code();
-
+        System.out.println("goodsName" + goodsName);
         try {
+            Goods goods = new Goods();
+            goods.setGoodsName(goodsName);
+            goods.setGoodsCount(goodsCount);
+            goods.setGoodsDescribe(goodsDescribe);
+            goods.setGoodsCategory(goodsCategory);
+            InputStream is = ImageUtil.getImageByte(path + goodsImg);
+            System.out.println(path + goodsImg);
+
+            goods.setGoodsImg(path+goodsImg);
+            goods.setLastModifyTime(lastModifyTime);
+            goods.setLastModifyUser(lastModifyUser);
+            goods.setOriginalPrice(originalPrice);
+            goods.setPresentPrice(presentPrice);
             goodsService.addGoods(goods);
             code.setCode("0");
             return code;
+
         } catch (Exception e) {
             e.printStackTrace();
+            code.setCode("1");
+            return code;
         }
-        code.setCode("1");
-        return code;
+    }
+
+    /**
+     * 文件输出流方法
+     */
+    public void fileOutputStream() {
+        File file = new File(".");
+        FileOutputStream out = null;
+        try {
+            if (!file.exists()) {
+                // 先得到文件的上级目录，并创建上级目录，在创建文件
+                file.getParentFile().mkdir();
+                file.createNewFile();
+            }
+
+            //创建文件输出流
+            out = new FileOutputStream(file);
+            //将字符串转化为字节
+            byte[] byteArr = "FileInputStream Test".getBytes();
+            out.write(byteArr);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -142,6 +192,7 @@ public class GoodsController {
 
     /**
      * 更新商品信息
+     *
      * @param goodsId
      * @param goodsName
      * @param goodsCount
@@ -158,16 +209,16 @@ public class GoodsController {
     @RequestMapping(value = "/updateGoods", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Code updateGoods(
-                            @RequestParam("goodsId") int goodsId ,
-                            @RequestParam("goodsName") String goodsName,
-                            @RequestParam("goodsCount") int goodsCount,
-                            @RequestParam("goodsDescribe") String goodsDescribe,
-                            @RequestParam("goodsCategory") int goodsCategory,
-                            @RequestParam("goodsImg") String goodsImg,
-                            @RequestParam("lastModifyTime") String lastModifyTime,
-                            @RequestParam("lastModifyUser") String lastModifyUser,
-                            @RequestParam("originalPrice") int originalPrice,
-                            @RequestParam("presentPrice") int presentPrice) {
+            @RequestParam("goodsId") int goodsId,
+            @RequestParam("goodsName") String goodsName,
+            @RequestParam("goodsCount") int goodsCount,
+            @RequestParam("goodsDescribe") String goodsDescribe,
+            @RequestParam("goodsCategory") int goodsCategory,
+            @RequestParam("goodsImg") Object goodsImg,
+            @RequestParam("lastModifyTime") String lastModifyTime,
+            @RequestParam("lastModifyUser") String lastModifyUser,
+            @RequestParam("originalPrice") int originalPrice,
+            @RequestParam("presentPrice") int presentPrice) {
 
         Goods goods1 = new Goods();
         goods1.setGoodsId(goodsId);
@@ -186,12 +237,12 @@ public class GoodsController {
         try {
             goodsService.updateGoods(goods1);
             code.setCode("0");
-            return code ;
+            return code;
         } catch (Exception e) {
             e.printStackTrace();
         }
         code.setCode("1");
-        return code ;
+        return code;
     }
 
 }

@@ -62,6 +62,18 @@
     </servlet-mapping>
 
 
+    <!--上传文件的servlet-->
+    <servlet>
+        <servlet-name>uploadFileServlet</servlet-name>
+        <servlet-class>com.kefeng.util.UploadFile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>uploadFileServlet</servlet-name>
+        <url-pattern>/goods/addGoods/*</url-pattern>
+    </servlet-mapping>
+
+
     <!-- druid -->
     <servlet>
         <servlet-name>DruidStatView</servlet-name>
