@@ -112,7 +112,7 @@ public class GoodsController {
                          HttpServletResponse response
     ) {
 
-        String path = "E:\\IDEA_workspace\\commodity_managerment\\src\\main\\webapp\\upload\\";
+        //String path = "E:\\IDEA_workspace\\commodity_managerment\\src\\main\\webapp\\upload\\";
         Code code = new Code();
         System.out.println("goodsName" + goodsName);
         try {
@@ -121,10 +121,7 @@ public class GoodsController {
             goods.setGoodsCount(goodsCount);
             goods.setGoodsDescribe(goodsDescribe);
             goods.setGoodsCategory(goodsCategory);
-            InputStream is = ImageUtil.getImageByte(path + goodsImg);
-            System.out.println(path + goodsImg);
-
-            goods.setGoodsImg(path+goodsImg);
+            goods.setGoodsImg(goodsImg);
             goods.setLastModifyTime(lastModifyTime);
             goods.setLastModifyUser(lastModifyUser);
             goods.setOriginalPrice(originalPrice);

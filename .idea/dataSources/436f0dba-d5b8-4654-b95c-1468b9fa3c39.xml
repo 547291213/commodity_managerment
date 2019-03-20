@@ -1137,7 +1137,7 @@
     </column>
     <column id="285" parent="278" name="goodsImg">
       <Position>5</Position>
-      <DataType>blob|0s</DataType>
+      <DataType>text|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="286" parent="278" name="goodsDescribe">

@@ -19,7 +19,7 @@ create table goods
 	goodsName TEXT not null,
 	goodsCount int not null,
 	goodsCategory int not null,
-	goodsImg blob null,
+	goodsImg text null,
 	goodsDescribe TEXT null,
 	lastModifyUser TEXT not null,
 	lastModifyTime TEXT not null,
