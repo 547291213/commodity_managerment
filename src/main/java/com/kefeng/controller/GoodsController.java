@@ -223,7 +223,14 @@ public class GoodsController {
         goods1.setGoodsCount(goodsCount);
         goods1.setGoodsDescribe(goodsDescribe);
         goods1.setGoodsCategory(goodsCategory);
-        goods1.setGoodsImg(goodsImg);
+        if(goodsImg!=null && !goodsImg.toString().isEmpty())
+        {
+            goods1.setGoodsImg(goodsImg);
+            System.out.println("传入的商品图片数据不为空");
+
+        }else{
+            System.out.println("传入的商品图片数据为空");
+        }
         goods1.setLastModifyTime(lastModifyTime);
         goods1.setLastModifyUser(lastModifyUser);
         goods1.setOriginalPrice(originalPrice);
