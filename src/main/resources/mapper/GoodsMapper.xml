@@ -7,7 +7,7 @@
     <select id="queryByCategory" parameterType="int" resultType="com.kefeng.pojo.Goods">
         select *
         from goods
-        where goodsCategory = #{goodsCategory}
+        where goodsCategory = #{goodsCategory} order by goodsId
     </select>
 
     <select id="getGoodsById" parameterType="int" resultType="com.kefeng.pojo.Goods">

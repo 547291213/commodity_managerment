@@ -114,7 +114,7 @@ public class GoodsController {
 
         //String path = "E:\\IDEA_workspace\\commodity_managerment\\src\\main\\webapp\\upload\\";
         Code code = new Code();
-        System.out.println("goodsName" + goodsName);
+        //System.out.println("goodsName" + goodsName);
         try {
             Goods goods = new Goods();
             goods.setGoodsName(goodsName);
