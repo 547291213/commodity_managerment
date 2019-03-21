@@ -7,7 +7,19 @@
     <select id="queryByCategory" parameterType="int" resultType="com.kefeng.pojo.Goods">
         select *
         from goods
-        where goodsCategory = #{goodsCategory} order by goodsId
+        where goodsCategory = #{goodsCategory}
+        order by goodsId
+    </select>
+
+    <select id="getSearchGoods" parameterType="String" resultType="com.kefeng.pojo.Goods">
+        select *
+        from goods
+        where
+
+            goodsDescribe like  CONCAT('%',#{data},'%')
+           or goodsName like  CONCAT('%',#{data},'%')
+           or lastModifyUser like CONCAT('%',#{data},'%')
+        order by goodsId
     </select>
 
     <select id="getGoodsById" parameterType="int" resultType="com.kefeng.pojo.Goods">
@@ -34,15 +46,15 @@
 
     <update id="updateGoods" parameterType="com.kefeng.pojo.Goods">
         update goods
-        set goodsName = #{goodsName} ,
-            goodsCount = #{goodsCount} ,
-            goodsCategory = #{goodsCategory} ,
-            goodsImg = #{goodsImg} ,
-            goodsDescribe = #{goodsDescribe} ,
-            lastModifyUser = #{lastModifyUser} ,
-            lastModifyTime = #{lastModifyTime} ,
-            originalPrice = #{originalPrice} ,
-            presentPrice = #{originalPrice}
+        set goodsName      = #{goodsName},
+            goodsCount     = #{goodsCount},
+            goodsCategory  = #{goodsCategory},
+            goodsImg       = #{goodsImg},
+            goodsDescribe  = #{goodsDescribe},
+            lastModifyUser = #{lastModifyUser},
+            lastModifyTime = #{lastModifyTime},
+            originalPrice  = #{originalPrice},
+            presentPrice   = #{originalPrice}
 
         where goodsId = #{goodsId}
     </update>

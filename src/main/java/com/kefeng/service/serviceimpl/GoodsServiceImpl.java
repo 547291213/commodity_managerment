@@ -62,8 +62,22 @@ public class GoodsServiceImpl implements GoodsService {
 
     }
 
+
     @Override
     public int getGoodsNum(int goodsCategory) {
         return goodsMapper.queryByCategory(goodsCategory).size()  ;
+    }
+
+    @Override
+    public List<Goods> getSearchGoods(String data, int pageNum, int pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);//分页核心代码
+        return goodsMapper.getSearchGoods(data);
+    }
+
+
+    @Override
+    public int getSearchCount(String data) {
+        return goodsMapper.getSearchGoods(data).size();
     }
 }

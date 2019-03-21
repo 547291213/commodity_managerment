@@ -69,6 +69,22 @@ public class GoodsController {
         return goodsGrid;
     }
 
+
+    //测试网址：http://localhost:8083/goods/page/search?data=1&current=1&rowCount=20
+    @RequestMapping(value = "/page/search", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    private GoodsGrid getStuGridBySearch(@RequestParam("data") String data, @RequestParam("current") int current, @RequestParam("rowCount") int rowCount) {
+        int total = goodsService.getSearchCount(data);
+        List<Goods> list = goodsService.getSearchGoods(data, current, rowCount);
+        GoodsGrid goodsGrid = new GoodsGrid();
+        goodsGrid.setCurrent(current);
+        goodsGrid.setRowCount(rowCount);
+        goodsGrid.setRows(list);
+        goodsGrid.setTotal(total);
+        return goodsGrid;
+    }
+
+
     @RequestMapping(value = "/getGoodsById", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public Goods getGoodsById(@RequestParam("goodsId") int goodsId) {

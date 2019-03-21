@@ -14,6 +14,15 @@ public interface GoodsMapper {
     List<Goods> queryByCategory(int goodsCategory);
 
     /**
+     * 根据搜索进行模糊查询
+     * @param data 搜索内容
+     * @return 商品列表
+     */
+    List<Goods> getSearchGoods(String data);
+
+
+
+    /**
      * 根据商品id来获取指定商品的i洗脑洗
      * @param goodsId
      * @return 指定商品的信息

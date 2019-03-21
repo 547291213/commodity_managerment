@@ -18,7 +18,11 @@ public interface GoodsService {
 
     List<Goods> getPageGoods(int goodsCategory, int pageNum, int pageSize);
 
-    int getGoodsNum(int goodsCategory) ;
+    int getGoodsNum(int goodsCategory);
+
+    List<Goods> getSearchGoods(String data, int pageNum, int pageSize);
+
+    int getSearchCount(String data);
 
 
 }
