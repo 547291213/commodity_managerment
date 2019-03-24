@@ -42,7 +42,8 @@ public class UserController {
             return "user/login";
         }
 
-        if (user.getPassword().equals(password)) {
+        //需要对用户的密码和权限进行确认
+        if (user.getPassword().equals(password) && user.getPermissions() >= 2) {
             httpSession.setAttribute("username", username);
             System.out.println("用户 ：" + username + " 登陆");
             //转到用户管理界面
