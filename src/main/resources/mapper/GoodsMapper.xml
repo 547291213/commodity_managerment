@@ -54,7 +54,7 @@
             lastModifyUser = #{lastModifyUser},
             lastModifyTime = #{lastModifyTime},
             originalPrice  = #{originalPrice},
-            presentPrice   = #{originalPrice}
+            presentPrice   = #{presentPrice}
 
         where goodsId = #{goodsId}
     </update>
